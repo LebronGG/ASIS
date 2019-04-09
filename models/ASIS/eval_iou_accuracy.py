@@ -1,12 +1,17 @@
 import os
 import numpy as np
 from scipy import stats
+import argparse
 
 NUM_CLASSES = 13
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--test_area', type=int, help='The areas except this one will be used to estimate the mean instance size')
+FLAGS = parser.parse_args()
+
 pred_data_label_filenames = []
-for i in range(5,6):
-  file_name = 'log{}_test/output_filelist.txt'.format(i)
+for i in range(FLAGS.test_area,FLAGS.test_area+1):
+  file_name = 'log{}_test/output_filelist.txt'.format(FLAGS.test_area)
   pred_data_label_filenames += [line.rstrip() for line in open(file_name)]
 
 gt_label_filenames = [f.rstrip('_pred\.txt') + '_gt.txt' for f in pred_data_label_filenames]
